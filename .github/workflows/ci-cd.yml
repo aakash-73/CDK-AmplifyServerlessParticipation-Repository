@@ -14,36 +14,37 @@ jobs:
         uses: actions/checkout@v4
 
       # Step 2: Set up AWS CLI
-      - name: Set up AWS CLI
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4.1.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      # Step 3: Set up Java and Maven
-      - name: Set up Java
+      # Step 3: Set up Java with Maven
+      - name: Set up Java 17 with Maven
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+            distribution: 'temurin'
+            java-version: '17'
+            cache: 'maven'
 
-      # Step 4: Set up Node.js for CDK CLI
-      - name: Set up Node.js
+      # Step 4: Set up Node.js (for CDK CLI)
+      - name: Set up Node.js 18
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
 
-      # Step 5: Install AWS CDK
+      # Step 5: Install AWS CDK globally
       - name: Install AWS CDK
         run: npm install -g aws-cdk
 
-      # Step 6: Install project dependencies and build Lambda package
-      - name: Build Lambda
+      # Step 6: Build Lambda package
+      - name: Build Lambda module
         working-directory: ./cicc-cdk-demo/lambda
         run: mvn clean package
 
-      # Step 7: Build CDK project
+      # Step 7: Build full CDK app
       - name: Build CDK app
         working-directory: ./cicc-cdk-demo
         run: mvn clean install

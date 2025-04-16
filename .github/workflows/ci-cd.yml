@@ -52,4 +52,6 @@ jobs:
       # Step 8: Deploy the CDK stack
       - name: Deploy CDK stack
         working-directory: ./cicc-cdk-demo
-        run: cdk deploy --require-approval never
+        run: |
+          cdk synth
+          cdk deploy --require-approval never

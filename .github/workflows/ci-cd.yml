@@ -1,0 +1,54 @@
+name: Deploy CDK from GitHub Actions
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up AWS CLI
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      # Step 3: Set up Java and Maven
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Step 4: Set up Node.js for CDK CLI
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # Step 5: Install AWS CDK
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      # Step 6: Install project dependencies and build Lambda package
+      - name: Build Lambda
+        working-directory: ./cicc-cdk-demo/lambda
+        run: mvn clean package
+
+      # Step 7: Build CDK project
+      - name: Build CDK app
+        working-directory: ./cicc-cdk-demo
+        run: mvn clean install
+
+      # Step 8: Deploy the CDK stack
+      - name: Deploy CDK stack
+        working-directory: ./cicc-cdk-demo
+        run: cdk deploy --require-approval never

@@ -50,8 +50,12 @@ jobs:
         run: mvn clean install
 
       # Step 8: Deploy the CDK stack
+      - name: Clean CDK output
+        working-directory: ./cicc-cdk-demo
+        run: rm -rf cdk.out
+
       - name: Deploy CDK stack
         working-directory: ./cicc-cdk-demo
         run: |
-          cdk synth
-          cdk deploy --require-approval never
+              cdk synth
+              cdk deploy --require-approval never

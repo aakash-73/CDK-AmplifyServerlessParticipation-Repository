@@ -46,7 +46,7 @@ jobs:
         working-directory: ./cicc-cdk-demo/lambda
         run: mvn clean package
 
-       # Optional: uncomment if your CDK code is being updated
+       # Optional: uncomment if your CDK code is being updated an need to be installed as new app
       # - name: Build CDK app
       #   working-directory: ./cicc-cdk-demo
       #   run: mvn clean install

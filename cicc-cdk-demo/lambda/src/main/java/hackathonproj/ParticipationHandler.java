@@ -1,4 +1,4 @@
-package Hackathonproj3;
+package hackathonproj;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -43,10 +43,10 @@ import software.amazon.awssdk.services.textract.model.Document;
 
 public class ParticipationHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    private static final String DYNAMODB_TABLE = "ParticipationRecordsCdkProj3";
-    private static final String S3_BUCKET_NAME = "proj3-Hackathon-bucket-cdk";
-    private static final String NAMES_IMAGE_PREFIX = "proj3/proj3-images/names/";
-    private static final String FACE_IMAGES_PREFIX = "proj3/proj3-images/faces/";
+    private static final String DYNAMODB_TABLE = "ParticipationRecordsCdkproj";
+    private static final String S3_BUCKET_NAME = "proj-hackathon-bucket-cdk";
+    private static final String NAMES_IMAGE_PREFIX = "proj/proj-images/names/";
+    private static final String FACE_IMAGES_PREFIX = "proj/proj-images/faces/";
 
     private final RekognitionClient rekognition = RekognitionClient.builder()
             .region(Region.US_EAST_2)
@@ -269,7 +269,7 @@ public class ParticipationHandler implements RequestHandler<APIGatewayProxyReque
             }
 
             byte[] bytes = Base64.getDecoder().decode(base64);
-            String key = String.format("proj3/proj3-images/uploads/%s/%s.jpg", classDate, name);
+            String key = String.format("proj/proj-images/uploads/%s/%s.jpg", classDate, name);
 
             PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(S3_BUCKET_NAME)

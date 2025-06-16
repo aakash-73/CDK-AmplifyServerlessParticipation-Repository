@@ -1,4 +1,4 @@
-package Hackathon;
+package hackathon;
 
 import software.amazon.awscdk.App;
 import software.amazon.awscdk.StackProps;
@@ -7,7 +7,7 @@ public class AmplifyParticpationDemoApp {
     public static void main(final String[] args) {
         App app = new App();
 
-        new AmplifyParticipationDemoStack(app, "Hackathon-AmplifyParticipationDemoStack", StackProps.builder()
+        new AmplifyParticipationDemoStack(app, "hackathon-AmplifyParticipationDemoStack", StackProps.builder()
                 // If you don't specify 'env', this stack will be environment-agnostic.
                 // Account/Region-dependent features and context lookups will not work,
                 // but a single synthesized template can be deployed anywhere.

@@ -136,22 +136,22 @@ public class AmplifyParticipationDemoStack extends Stack {
         // Add POST method to process resource
         processResource.addMethod("POST", ParticipationIntegration, participationMethodOptions);
 
-        // try {
-        //         MethodResponse optionsMethodResponse = MethodResponse.builder()
-        //                 .statusCode("200")
-        //                 .responseParameters(Map.of(
-        //                     "method.response.header.Access-Control-Allow-Origin", false,
-        //                     "method.response.header.Access-Control-Allow-Headers", false,
-        //                     "method.response.header.Access-Control-Allow-Methods", false
-        //                 ))
-        //                 .build();
-        //         MethodOptions optionsMethodOptions = MethodOptions.builder()
-        //                 .methodResponses(List.of(optionsMethodResponse))
-        //                 .build();
-        //         processResource.addMethod("OPTIONS", mockIntegration, optionsMethodOptions);
-        //     } catch (Exception e) {
-        //         System.out.println("OPTIONS method already exists for the resource: " + e.getMessage());
-        // }
+        try {
+                MethodResponse optionsMethodResponse = MethodResponse.builder()
+                        .statusCode("200")
+                        .responseParameters(Map.of(
+                            "method.response.header.Access-Control-Allow-Origin", false,
+                            "method.response.header.Access-Control-Allow-Headers", false,
+                            "method.response.header.Access-Control-Allow-Methods", false
+                        ))
+                        .build();
+                MethodOptions optionsMethodOptions = MethodOptions.builder()
+                        .methodResponses(List.of(optionsMethodResponse))
+                        .build();
+                processResource.addMethod("OPTIONS", mockIntegration, optionsMethodOptions);
+            } catch (Exception e) {
+                System.out.println("OPTIONS method already exists for the resource: " + e.getMessage());
+        }
         // 4. Set up Amplify App
         //  software.amazon.awscdk.services.amplify.App amplifyApp = software.amazon.awscdk.services.amplify.App.Builder
         //          .create(this, "TextractProcessingApp")

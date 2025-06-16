@@ -72,6 +72,7 @@ public class ParticipationHandler implements RequestHandler<APIGatewayProxyReque
 
     // DTO for serializing FaceDetail
     private static class FaceDetailDTO {
+
         private Float confidence;
         private String gender;
         private Boolean smile;
@@ -264,12 +265,17 @@ public class ParticipationHandler implements RequestHandler<APIGatewayProxyReque
 
     private String uploadBase64Image(String base64, String name, String email, String classDate) {
         try {
+            System.out.println("Starting base64 decoding...");
+
             if (base64.contains(",")) {
                 base64 = base64.split(",")[1];
             }
 
             byte[] bytes = Base64.getDecoder().decode(base64);
+            System.out.println("Decoded image byte length: " + bytes.length);
+
             String key = String.format("proj/proj-images/uploads/%s/%s.jpg", classDate, name);
+            System.out.println("Uploading to S3 with key: " + key);
 
             PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(S3_BUCKET_NAME)
@@ -278,9 +284,13 @@ public class ParticipationHandler implements RequestHandler<APIGatewayProxyReque
                     .build();
 
             s3.putObject(request, software.amazon.awssdk.core.sync.RequestBody.fromBytes(bytes));
+
+            System.out.println("Successfully uploaded to S3!");
             return key;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to upload image to S3", e);
+            System.err.println("S3 Upload Error: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 

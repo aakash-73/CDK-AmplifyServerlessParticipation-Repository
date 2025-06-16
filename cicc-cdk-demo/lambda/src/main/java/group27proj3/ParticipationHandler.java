@@ -1,4 +1,4 @@
-package group27proj3;
+package Hackathonproj3;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -44,7 +44,7 @@ import software.amazon.awssdk.services.textract.model.Document;
 public class ParticipationHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final String DYNAMODB_TABLE = "ParticipationRecordsCdkProj3";
-    private static final String S3_BUCKET_NAME = "proj3-group27-bucket-cdk";
+    private static final String S3_BUCKET_NAME = "proj3-Hackathon-bucket-cdk";
     private static final String NAMES_IMAGE_PREFIX = "proj3/proj3-images/names/";
     private static final String FACE_IMAGES_PREFIX = "proj3/proj3-images/faces/";
 

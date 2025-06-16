@@ -1,4 +1,4 @@
-package group27;
+package Hackathon;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,10 +39,10 @@ public class AmplifyParticipationDemoStack extends Stack {
         //         .visibilityTimeout(Duration.seconds(300))
         //         .build();
         // 1. Create Lambda function for processing images with Textract
-        Function ParticipationFunction = Function.Builder.create(this, "group27-proj3-ParticipationFunction")
+        Function ParticipationFunction = Function.Builder.create(this, "Hackathon-proj3-ParticipationFunction")
                 .runtime(Runtime.JAVA_17)
                 .code(Code.fromAsset("./lambda/target/Participation.jar"))
-                .handler("group27proj3.ParticipationHandler::handleRequest")
+                .handler("Hackathonproj3.ParticipationHandler::handleRequest")
                 .memorySize(1024)
                 .timeout(Duration.seconds(30))
                 .build();
@@ -52,14 +52,14 @@ public class AmplifyParticipationDemoStack extends Stack {
         ParticipationFunction.addToRolePolicy(PolicyStatement.Builder.create()
                 .effect(Effect.ALLOW)
                 .actions(Arrays.asList("s3:GetObject", "s3:PutObject"))
-                .resources(Arrays.asList("arn:aws:s3:::proj3-group27-bucket-cdk/*")) // Replace with your bucket name
+                .resources(Arrays.asList("arn:aws:s3:::proj3-Hackathon-bucket-cdk/*")) // Replace with your bucket name
                 .build());
 
 // Grant S3 ListBucket permission
         ParticipationFunction.addToRolePolicy(PolicyStatement.Builder.create()
                 .effect(Effect.ALLOW)
                 .actions(Arrays.asList("s3:ListBucket"))
-                .resources(Arrays.asList("arn:aws:s3:::proj3-group27-bucket-cdk")) // Replace with your bucket name
+                .resources(Arrays.asList("arn:aws:s3:::proj3-Hackathon-bucket-cdk")) // Replace with your bucket name
                 .build());
 
 // Grant DynamoDB permissions (PutItem, GetItem)

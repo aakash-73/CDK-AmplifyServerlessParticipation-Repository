@@ -119,4 +119,22 @@ These are defined within the CDK stack using `Role` and `PolicyStatement` constr
 Graduate Student  
 University of Central Oklahoma
 
-- There is also and Makefile with all setup and deployment commad
+- There is also and Makefile with all setup and deployment commands
+
+## AWS LAMBDA FUNCTINALITY
+
+In this project, AWS Lambda acted as the backend engine that automatically processed student participation data whenever an image was submitted. The Lambda function was written in Java and deployed using AWS CDK.
+
+When a professor uploaded an image (either from an online Zoom session or an offline classroom), the frontend sent that image to an API Gateway endpoint, which triggered the Lambda function. Here’s what the Lambda function did step-by-step:
+
+Image Upload to S3: It took the base64-encoded image from the request, decoded it, and uploaded it to a specific folder in an S3 bucket based on the class date and student name.
+
+Text Extraction (Online Participation): For Zoom session images, the Lambda function used Amazon Textract to extract names from screenshots. It then checked if the uploaded student name was present in the extracted text.
+
+Face Recognition (Offline Participation): For classroom images, the Lambda function used Amazon Rekognition to detect and compare faces in the uploaded image against stored reference face images in S3.
+
+Participation Verification: If a match was found either through name recognition or face comparison, the system marked the student as “present.”
+
+Data Storage in DynamoDB: Finally, the participation status along with metadata like name, email, date, match type, and image reference key was stored in a DynamoDB table.
+
+By using Lambda, this entire process was automated without running a server, making the system cost-effective and highly scalable.
